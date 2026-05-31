@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Exam – Applying for a Job | English Y9</title>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f4f1;
+    --bg3: #eeedea;
+    --text: #1a1a18;
+    --text2: #6b6b66;
+    --text3: #9a9a94;
+    --border: rgba(0,0,0,0.12);
+    --border2: rgba(0,0,0,0.22);
+    --info-bg: #e6f1fb;
+    --info-text: #0c447c;
+    --teal-bg: #e1f5ee;
+    --teal-text: #085041;
+    --amber-bg: #faeeda;
+    --amber-text: #633806;
+    --coral-bg: #faece7;
+    --coral-text: #4a1b0c;
+    --danger: #a32d2d;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg2);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .page-header .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--text2);
+  }
+  .page-header h1 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tab {
+    flex: 1;
+    min-width: 120px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text2);
+    border-radius: calc(var(--radius-lg) - 4px);
+    transition: all .15s;
+    font-family: inherit;
+  }
+  .tab:hover { background: var(--bg2); color: var(--text); }
+  .tab.active { background: var(--text); color: #fff; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: .75rem;
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: .65rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* BADGES */
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-blue  { background: var(--info-bg);  color: var(--info-text); }
+  .badge-teal  { background: var(--teal-bg);  color: var(--teal-text); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .badge-coral { background: var(--coral-bg); color: var(--coral-text); }
+
+  /* CHECKLIST */
+  .check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 7px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .check-row:last-child { border-bottom: none; }
+  .check-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--info-text);
+  }
+  .sub { font-size: 11px; color: var(--text3); margin-left: 4px; }
+
+  /* PHRASE BANK */
+  .phrase-section-title {
+    font-size: 11px;
+    color: var(--text2);
+    margin: .7rem 0 .4rem;
+    font-weight: 500;
+  }
+  .phrase-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+  .phrase {
+    font-size: 12px;
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 11px;
+    color: var(--text2);
+  }
+
+  /* JOB CARDS */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: .5rem;
+    margin-top: .75rem;
+  }
+  .role-card {
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    padding: .7rem .9rem;
+    cursor: pointer;
+    transition: all .15s;
+    background: var(--bg);
+  }
+  .role-card:hover { background: var(--bg2); }
+  .role-card.selected { border-color: var(--info-text); background: var(--info-bg); }
+  .role-card .role-title { font-size: 13px; font-weight: 500; }
+
+  #role-detail-card { display: none; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+  .detail-label { font-size: 11px; font-weight: 500; color: var(--text2); margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .05em; }
+  .detail-body { font-size: 13px; line-height: 1.75; }
+  .discuss-box { margin-top: .75rem; background: var(--bg2); border-radius: var(--radius); padding: .65rem .9rem; font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* TIMER */
+  .timer-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .timer-display {
+    font-family: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+    font-size: 30px;
+    font-weight: 500;
+    min-width: 80px;
+    transition: color .3s;
+  }
+  .timer-btn {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--bg2);
+    color: var(--text);
+    transition: background .15s;
+  }
+  .timer-btn:hover { background: var(--bg3); }
+  .timer-btn.running { border-color: var(--danger); color: var(--danger); }
+  select {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 6px 10px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--bg2);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  /* FOLLOW-UP */
+  .question-box {
+    display: none;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 1.1rem 1.25rem;
+    background: var(--bg2);
+    border-radius: var(--radius);
+    margin-bottom: .75rem;
+    line-height: 1.5;
+  }
+  .tip-box {
+    display: none;
+    background: var(--bg2);
+    border-left: 2px solid #1d9e75;
+    padding: .7rem 1rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-top: .5rem;
+  }
+  .draw-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 9px 20px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--text);
+    color: #fff;
+    transition: opacity .15s;
+    margin-bottom: 1rem;
+  }
+  .draw-btn:hover { opacity: .85; }
+
+  /* FEEDBACK */
+  .feedback-section-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: .55rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .name-input, .note-area {
+    width: 100%;
+    padding: 8px 11px;
+    font-family: inherit;
+    font-size: 13px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--bg2);
+    color: var(--text);
+    margin-top: 4px;
+  }
+  .note-area { min-height: 65px; resize: vertical; }
+  .name-input:focus, .note-area:focus, select:focus {
+    outline: none;
+    border-color: var(--info-text);
+    box-shadow: 0 0 0 2px var(--info-bg);
+  }
+
+  /* STARS */
+  .rating-row { display: flex; align-items: center; gap: 6px; margin-top: .5rem; }
+  .star { font-size: 22px; cursor: pointer; color: var(--border2); transition: color .1s; user-select: none; }
+  .star.lit { color: #ef9f27; }
+  #star-label { font-size: 12px; color: var(--text2); margin-left: 6px; }
+
+  .print-btn {
+    margin-top: 1rem;
+    padding: 9px 20px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    background: var(--bg2);
+    color: var(--text);
+  }
+  .print-btn:hover { background: var(--bg3); }
+
+  /* general info box */
+  .intro-text { font-size: 13.5px; color: var(--text2); line-height: 1.65; margin-bottom: 1.25rem; }
+
+  @media print {
+    body { background: #fff; }
+    .tab-bar { display: none; }
+    .panel { display: block !important; }
+    .draw-btn, .timer-wrap, .print-btn { display: none; }
+    .page-header { border: none; padding: .5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="eyebrow">English Y9 · Big Dreams – Small Steps</span>
+  <h1>Mock Exam – Applying for a Job</h1>
+</div>
+
+<div class="container">
+
+  <p class="intro-text">Work in groups of 4. Use each tab to prepare, practise, and give peer feedback. One person can act as "teacher" for the follow-up questions.</p>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('prep')">Part 1 – Self-intro</button>
+    <button class="tab" onclick="showTab('dialogue')">Part 2 – Dialogue</button>
+    <button class="tab" onclick="showTab('followup')">Part 3 – Follow-ups</button>
+    <button class="tab" onclick="showTab('feedback')">Peer Feedback</button>
+  </div>
+
+  <!-- ══════════════════ PART 1 ══════════════════ -->
+  <div id="tab-prep" class="panel active">
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-blue">Task</span> Part 1 · Introducing yourself (1–2 min)</div>
+      <p style="font-size:13px;margin-bottom:.75rem;color:var(--text2)">Prepare your self-introduction. Tick each point before you start speaking.</p>
+      <div class="check-row"><input type="checkbox"><span>I mention my name, age / class, and where I'm from.</span></div>
+      <div class="check-row"><input type="checkbox"><span>I describe 2–3 of my <strong>interests or hobbies</strong>.</span></div>
+      <div class="check-row"><input type="checkbox"><span>I use <strong>character vocabulary</strong> to describe myself (e.g. hard-working, creative, patient).</span></div>
+      <div class="check-row"><input type="checkbox"><span>I name the field of work I'm interested in and explain <strong>why</strong>.</span></div>
+      <div class="check-row"><input type="checkbox"><span>I mention whether I have any <strong>work experience</strong> (e.g. babysitting, a school project, a part-time job).</span></div>
+      <div class="check-row"><input type="checkbox"><span>I have a clear <strong>opening phrase</strong> and a <strong>closing phrase</strong>.</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-teal">Phrase bank</span> Useful phrases for Part 1</div>
+
+      <div class="phrase-section-title">Opening</div>
+      <div class="phrase-wrap">
+        <span class="phrase">Hello, my name is … and I'm in Year 9.</span>
+        <span class="phrase">I'd like to tell you a little bit about myself.</span>
+        <span class="phrase">Let me start by introducing myself.</span>
+      </div>
+
+      <div class="phrase-section-title">Describing yourself</div>
+      <div class="phrase-wrap">
+        <span class="phrase">People often describe me as …</span>
+        <span class="phrase">One of my strengths is …</span>
+        <span class="phrase">I consider myself to be …</span>
+        <span class="phrase">I'm also quite good at …</span>
+        <span class="phrase">I sometimes struggle with …, but I'm working on it.</span>
+      </div>
+
+      <div class="phrase-section-title">Job interest &amp; experience</div>
+      <div class="phrase-wrap">
+        <span class="phrase">I've always been interested in …</span>
+        <span class="phrase">What draws me to this field is …</span>
+        <span class="phrase">I would love to work as a … because …</span>
+        <span class="phrase">I have some experience with … through …</span>
+        <span class="phrase">I haven't had a formal job yet, but …</span>
+      </div>
+
+      <div class="phrase-section-title">Closing</div>
+      <div class="phrase-wrap">
+        <span class="phrase">That's a brief overview of who I am.</span>
+        <span class="phrase">Thank you for listening.</span>
+        <span class="phrase">I'm happy to answer any questions.</span>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 2px solid #1d9e75; border-radius: 0 var(--radius-lg) var(--radius-lg) 0;">
+      <p style="font-size:13px;color:var(--text2);line-height:1.65"><strong>Group activity:</strong> Each person has 90 seconds to give their introduction. The others listen and use the Peer Feedback tab. Afterwards: give 1 positive comment and 1 tip for improvement.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ PART 2 ══════════════════ -->
+  <div id="tab-dialogue" class="panel">
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-amber">Task</span> Part 2 · Pair dialogue (3–5 min)</div>
+      <p style="font-size:13px;margin-bottom:.75rem;color:var(--text2)">Pick a job card below, then discuss the four points as if you are both waiting outside an interview room.</p>
+      <div class="check-row"><input type="checkbox"><span>We discuss <strong>what we plan to say</strong> in the interview.</span></div>
+      <div class="check-row"><input type="checkbox"><span>We talk about <strong>tasks and responsibilities</strong> of our jobs.</span></div>
+      <div class="check-row"><input type="checkbox"><span>We mention <strong>skills and qualities</strong> needed.</span></div>
+      <div class="check-row"><input type="checkbox"><span>We share <strong>expectations</strong> (hours, teamwork, challenges, motivation).</span></div>
+      <div class="check-row"><input type="checkbox"><span>We ask each other questions and <strong>react</strong> to what is said – not just monologues!</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-amber">Job cards</span> Click a job to see the profile</div>
+      <div id="role-grid" class="role-grid"></div>
+    </div>
+
+    <div class="card" id="role-detail-card">
+      <div class="card-title" id="role-detail-title"></div>
+      <div class="two-col">
+        <div>
+          <div class="detail-label">Tasks &amp; Responsibilities</div>
+          <div class="detail-body" id="role-tasks"></div>
+        </div>
+        <div>
+          <div class="detail-label">Skills &amp; Qualities needed</div>
+          <div class="detail-body" id="role-skills"></div>
+        </div>
+      </div>
+      <div class="discuss-box">
+        <strong>Things to discuss:</strong> <span id="role-discuss"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-teal">Phrase bank</span> Keeping the dialogue going</div>
+      <div class="phrase-section-title">Starting the conversation</div>
+      <div class="phrase-wrap">
+        <span class="phrase">So, what job are you applying for?</span>
+        <span class="phrase">Are you nervous about the interview?</span>
+        <span class="phrase">What are you planning to say?</span>
+      </div>
+      <div class="phrase-section-title">Reacting &amp; keeping it going</div>
+      <div class="phrase-wrap">
+        <span class="phrase">That sounds really interesting!</span>
+        <span class="phrase">Do you think you're well-suited for that?</span>
+        <span class="phrase">I agree, but on the other hand …</span>
+        <span class="phrase">What do you mean by …?</span>
+        <span class="phrase">How do you feel about …?</span>
+        <span class="phrase">I'm a bit nervous, to be honest.</span>
+        <span class="phrase">What's most important to you in a job?</span>
+        <span class="phrase">Me too! / Really? I think …</span>
+        <span class="phrase">That's a good point.</span>
+        <span class="phrase">I hadn't thought of that.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⏱ Timer</div>
+      <div class="timer-wrap">
+        <span class="timer-display" id="timer-display">3:00</span>
+        <button class="timer-btn" id="timer-btn" onclick="toggleTimer()">Start</button>
+        <button class="timer-btn" onclick="resetTimer()">Reset</button>
+        <select id="timer-select" onchange="resetTimer()">
+          <option value="180">3 min</option>
+          <option value="240">4 min</option>
+          <option value="300">5 min</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ PART 3 ══════════════════ -->
+  <div id="tab-followup" class="panel">
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-coral">Task</span> Part 3 · Follow-up questions (1–2 min each)</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.6">One person in the group acts as the teacher and draws a question. The student answers <strong>spontaneously</strong> – aim for at least 2–3 sentences with a reason or example. The group then gives quick feedback.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Draw a random question</div>
+      <button class="draw-btn" onclick="drawQuestion()">Draw question →</button>
+      <div class="question-box" id="question-box"></div>
+      <div class="tip-box" id="question-tip"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="badge badge-teal">Phrase bank</span> Responding spontaneously</div>
+      <div class="phrase-section-title">Buying time</div>
+      <div class="phrase-wrap">
+        <span class="phrase">That's a great question …</span>
+        <span class="phrase">Let me think about that for a moment.</span>
+        <span class="phrase">Well, I suppose …</span>
+        <span class="phrase">I've never really thought about that, but …</span>
+      </div>
+      <div class="phrase-section-title">Giving your opinion</div>
+      <div class="phrase-wrap">
+        <span class="phrase">In my opinion, …</span>
+        <span class="phrase">Personally, I think …</span>
+        <span class="phrase">From my point of view, …</span>
+        <span class="phrase">I strongly believe that …</span>
+      </div>
+      <div class="phrase-section-title">Adding detail</div>
+      <div class="phrase-wrap">
+        <span class="phrase">For example, …</span>
+        <span class="phrase">What I mean is …</span>
+        <span class="phrase">On top of that, …</span>
+        <span class="phrase">This is important because …</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ FEEDBACK ══════════════════ -->
+  <div id="tab-feedback" class="panel">
+
+    <div class="card">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;line-height:1.6">Fill in after watching your classmate speak. Be honest and helpful – your feedback helps them improve!</p>
+      <label style="font-size:12px;color:var(--text2)">Name of the speaker</label>
+      <input class="name-input" type="text" placeholder="Type name here …">
+      <div style="margin-top:.75rem">
+        <label style="font-size:12px;color:var(--text2)">Which part are you evaluating?</label><br>
+        <select style="margin-top:4px">
+          <option>Part 1 – Self-introduction</option>
+          <option>Part 2 – Dialogue</option>
+          <option>Part 3 – Follow-up question</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="feedback-section-title"><span class="badge badge-blue">Content</span> Did they cover everything?</div>
+      <div class="check-row"><input type="checkbox"><span>Talked about themselves – name, interests, character traits <span class="sub">Part 1</span></span></div>
+      <div class="check-row"><input type="checkbox"><span>Explained their job choice and gave reasons <span class="sub">Part 1 &amp; 2</span></span></div>
+      <div class="check-row"><input type="checkbox"><span>Mentioned tasks and responsibilities of the job <span class="sub">Part 2</span></span></div>
+      <div class="check-row"><input type="checkbox"><span>Talked about skills and qualities needed <span class="sub">Part 2</span></span></div>
+      <div class="check-row"><input type="checkbox"><span>Expressed expectations (hours, challenges, motivation) <span class="sub">Part 2</span></span></div>
+      <div class="check-row"><input type="checkbox"><span>Gave a full answer with examples or reasons <span class="sub">Part 3</span></span></div>
+    </div>
+
+    <div class="card">
+      <div class="feedback-section-title"><span class="badge badge-teal">Language</span> How well did they express themselves?</div>
+      <div class="check-row"><input type="checkbox"><span>Used <strong>character / job vocabulary</strong> correctly (e.g. reliable, patient, take responsibility for)</span></div>
+      <div class="check-row"><input type="checkbox"><span>Used <strong>opinion phrases</strong> (e.g. In my opinion …, I think … because …)</span></div>
+      <div class="check-row"><input type="checkbox"><span>Used <strong>linking words</strong> to connect ideas (e.g. however, moreover, on the other hand)</span></div>
+      <div class="check-row"><input type="checkbox"><span>Grammar was mostly correct (verb forms, tenses, sentence structure)</span></div>
+      <div class="check-row"><input type="checkbox"><span>Pronunciation was clear and easy to understand</span></div>
+    </div>
+
+    <div class="card">
+      <div class="feedback-section-title"><span class="badge badge-amber">Interaction</span> Did they communicate well? <span class="sub">mainly Part 2 &amp; 3</span></div>
+      <div class="check-row"><input type="checkbox"><span>Asked questions and reacted to their partner's answers</span></div>
+      <div class="check-row"><input type="checkbox"><span>Kept the conversation going naturally – didn't just read from notes</span></div>
+      <div class="check-row"><input type="checkbox"><span>Responded to the follow-up question <strong>spontaneously</strong> without a long pause</span></div>
+      <div class="check-row"><input type="checkbox"><span>Extended their answer with extra information or examples</span></div>
+    </div>
+
+    <div class="card">
+      <div class="feedback-section-title">Overall impression</div>
+      <div class="rating-row" id="stars">
+        <span class="star" onclick="rate(1)">★</span>
+        <span class="star" onclick="rate(2)">★</span>
+        <span class="star" onclick="rate(3)">★</span>
+        <span class="star" onclick="rate(4)">★</span>
+        <span class="star" onclick="rate(5)">★</span>
+        <span id="star-label">Click to rate</span>
+      </div>
+      <div style="margin-top:1rem">
+        <p style="font-size:13px;font-weight:500;margin-bottom:.35rem">⭐ One thing they did really well:</p>
+        <textarea class="note-area" placeholder="Be specific – what exactly impressed you?"></textarea>
+      </div>
+      <div style="margin-top:.9rem">
+        <p style="font-size:13px;font-weight:500;margin-bottom:.35rem">💡 One thing to improve next time:</p>
+        <textarea class="note-area" placeholder="Be kind and specific – what could they do differently?"></textarea>
+      </div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨 Print this feedback sheet</button>
+
+  </div>
+
+</div><!-- /container -->
+
+<script>
+const roles = [
+  {title:"Firefighter",tasks:"• Respond to fires & emergencies\n• Rescue people in danger\n• Inspect buildings for hazards\n• Give first aid",skills:"• Physically fit & courageous\n• Able to work under pressure\n• Team player\n• Calm and decisive",discuss:"Would you be scared? How do you stay calm under pressure? What training is required?"},
+  {title:"Nurse",tasks:"• Care for patients\n• Administer medication\n• Assist doctors\n• Keep medical records",skills:"• Empathetic & patient\n• Detail-oriented\n• Good communication\n• Able to work shifts",discuss:"How do you deal with stressful situations? Why is this job rewarding despite the challenges?"},
+  {title:"Event Manager",tasks:"• Plan and organise events\n• Coordinate suppliers & teams\n• Manage budgets\n• Solve last-minute problems",skills:"• Organised & creative\n• Strong leadership\n• Good under pressure\n• Multitasking",discuss:"What would your ideal event be? What could go wrong and how would you handle it?"},
+  {title:"Influencer / Content Creator",tasks:"• Film and edit videos\n• Write captions & posts\n• Engage with followers\n• Work with brands",skills:"• Creative & self-motivated\n• Comfortable on camera\n• Understand social media\n• Business-minded",discuss:"Is this a 'real' job? What are the risks? How do you deal with negative comments?"},
+  {title:"Cook / Chef",tasks:"• Prepare and cook meals\n• Design menus\n• Manage kitchen hygiene\n• Order supplies",skills:"• Creative & precise\n• Able to work fast\n• Team player\n• Passionate about food",discuss:"What are the working hours like? Would you enjoy the pressure of a busy kitchen?"},
+  {title:"Teacher",tasks:"• Plan and deliver lessons\n• Assess student work\n• Communicate with parents\n• Support individual learners",skills:"• Patient & communicative\n• Organised\n• Passionate about a subject\n• Adaptable",discuss:"What subject would you teach? What do you think is the biggest challenge of being a teacher?"},
+  {title:"Psychologist",tasks:"• Conduct therapy sessions\n• Diagnose mental health issues\n• Write case reports\n• Support people in crisis",skills:"• Empathetic & trustworthy\n• Good listener\n• Strong analytical skills\n• Emotionally resilient",discuss:"How do you separate work from personal life? Why is mental health support so important today?"},
+  {title:"Pilot",tasks:"• Fly aircraft safely\n• Communicate with air traffic control\n• Monitor instruments\n• Ensure passenger safety",skills:"• Calm & focused\n• Excellent decision-making\n• Mathematically minded\n• Highly responsible",discuss:"What are the perks and downsides? How long does training take? Would you enjoy the travel?"},
+  {title:"Photographer",tasks:"• Take and edit photos\n• Work with clients\n• Choose locations & lighting\n• Build a portfolio",skills:"• Creative eye\n• Technical knowledge\n• Patient & adaptable\n• Business skills (freelance)",discuss:"How do you find clients? Is it hard to make a living as a freelance photographer?"},
+  {title:"Car Mechanic",tasks:"• Diagnose technical faults\n• Repair engines & parts\n• Service vehicles\n• Order spare parts",skills:"• Technical knowledge\n• Problem-solving\n• Attention to detail\n• Physically capable",discuss:"Is this job underrated? How is technology (e.g. electric cars) changing this profession?"},
+  {title:"Hairdresser",tasks:"• Cut, colour & style hair\n• Consult clients on looks\n• Keep tools clean & safe\n• Manage appointments",skills:"• Creative & precise\n• Good communication\n• Can stand for long hours\n• Building client relationships",discuss:"Would you work in a salon or run your own? What's the most challenging part?"},
+  {title:"Doctor",tasks:"• Diagnose illnesses\n• Prescribe treatments\n• Perform check-ups\n• Work with medical teams",skills:"• Highly educated\n• Empathetic & calm\n• Good at analysis\n• Able to work long hours",discuss:"How many years of study are required? Is the pressure worth it? What motivates you?"},
+  {title:"Kindergarten Teacher",tasks:"• Look after young children\n• Plan play-based activities\n• Support development\n• Communicate with parents",skills:"• Patient & caring\n• Creative\n• Energetic\n• Observant",discuss:"How do you handle difficult children? Why is early childhood education so important?"},
+  {title:"Police Officer",tasks:"• Maintain public safety\n• Investigate crimes\n• Write reports\n• Work with the community",skills:"• Physically fit\n• Honest & fair\n• Quick decision-maker\n• Resilient",discuss:"What are the risks? How do you stay fair under pressure? What motivates you?"},
+  {title:"Journalist / Blogger",tasks:"• Research and write articles\n• Conduct interviews\n• Meet deadlines\n• Manage social media",skills:"• Curious & observant\n• Strong writing skills\n• Networking\n• Critical thinking",discuss:"How do you ensure what you write is true? Is online journalism replacing print media?"},
+  {title:"Fitness Trainer",tasks:"• Design workout plans\n• Coach clients\n• Track progress\n• Promote healthy habits",skills:"• Motivating & energetic\n• Knowledgeable about fitness\n• Patient\n• Good communicator",discuss:"How do you motivate someone who wants to give up? What qualifications do you need?"},
+];
+
+const followUpQs = [
+  {q:"Would you like to do this job in real life? Why / why not?",tip:"Think about your personal interests and strengths. Give at least one clear reason!"},
+  {q:"What do you think is more important: salary or job satisfaction?",tip:"There's no right answer – just give your opinion and explain it with an example."},
+  {q:"Would you rather work alone or in a team? Why?",tip:"Think about your own character. Are you more independent or do you enjoy collaboration?"},
+  {q:"How would you describe a perfect working day?",tip:"Be creative! Think about the environment, the tasks, your colleagues, and how you feel at the end of the day."},
+  {q:"Which job would you never want to do – and why?",tip:"Be honest! Say what specific aspect of that job puts you off."},
+  {q:"How could you prepare for this job in the future?",tip:"Think about school subjects, work experience, internships, or skills you could develop."},
+  {q:"What do you think makes someone a good employee?",tip:"Name 2–3 qualities and say why each one matters in the workplace."},
+  {q:"Do you think men and women should be paid the same for this job?",tip:"This is about equal pay – give your view and a reason. Try to see both sides."},
+  {q:"What could go wrong during a job interview?",tip:"Think practically: nerves, forgetting something, inappropriate clothes, not knowing about the company …"},
+  {q:"How would you react if you didn't get the job?",tip:"Show resilience! What would you do next? How would you use it as a learning experience?"},
+  {q:"What job would you choose if you could do absolutely anything?",tip:"Dream big! Explain what excites you about it and what skills you already have for it."},
+];
+
+// ── TABS ──────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['prep','dialogue','followup','feedback'][i] === id);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+// ── JOB CARDS ─────────────────────────────────────────
+function buildRoles() {
+  const grid = document.getElementById('role-grid');
+  roles.forEach((r, i) => {
+    const d = document.createElement('div');
+    d.className = 'role-card';
+    d.innerHTML = `<div class="role-title">${r.title}</div>`;
+    d.onclick = () => selectRole(i, d);
+    grid.appendChild(d);
+  });
+}
+
+function selectRole(i, el) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const r = roles[i];
+  const card = document.getElementById('role-detail-card');
+  card.style.display = 'block';
+  document.getElementById('role-detail-title').innerHTML = `<span class="badge badge-amber">${r.title}</span> Job profile`;
+  document.getElementById('role-tasks').innerHTML = r.tasks.split('\n').join('<br>');
+  document.getElementById('role-skills').innerHTML = r.skills.split('\n').join('<br>');
+  document.getElementById('role-discuss').textContent = r.discuss;
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── TIMER ─────────────────────────────────────────────
+let timerInterval = null;
+let timerRunning = false;
+let timerSeconds = 180;
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-btn').textContent = 'Resume';
+    document.getElementById('timer-btn').classList.remove('running');
+  } else {
+    timerRunning = true;
+    document.getElementById('timer-btn').textContent = 'Pause';
+    document.getElementById('timer-btn').classList.add('running');
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      updateTimerDisplay();
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timer-btn').textContent = 'Time\'s up!';
+        document.getElementById('timer-btn').classList.remove('running');
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = parseInt(document.getElementById('timer-select').value);
+  updateTimerDisplay();
+  document.getElementById('timer-btn').textContent = 'Start';
+  document.getElementById('timer-btn').classList.remove('running');
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  const display = document.getElementById('timer-display');
+  display.textContent = m + ':' + (s < 10 ? '0' + s : s);
+  display.style.color = timerSeconds <= 30 ? 'var(--danger)' : 'var(--text)';
+}
+
+// ── FOLLOW-UP QUESTIONS ───────────────────────────────
+function drawQuestion() {
+  const q = followUpQs[Math.floor(Math.random() * followUpQs.length)];
+  const box = document.getElementById('question-box');
+  const tip = document.getElementById('question-tip');
+  box.textContent = q.q;
+  box.style.display = 'block';
+  tip.innerHTML = '<strong>💡 Tip:</strong> ' + q.tip;
+  tip.style.display = 'block';
+}
+
+// ── STAR RATING ───────────────────────────────────────
+function rate(n) {
+  document.querySelectorAll('#stars .star').forEach((s, i) => {
+    s.classList.toggle('lit', i < n);
+  });
+  const labels = ['', 'Needs a lot of work', 'Could be better', 'Okay', 'Good job!', 'Excellent!'];
+  document.getElementById('star-label').textContent = labels[n];
+}
+
+// ── INIT ──────────────────────────────────────────────
+buildRoles();
+</script>
+</body>
+</html>
